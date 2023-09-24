@@ -1,0 +1,11 @@
+package contador;
+public class Animal{
+    public static void main(String [] args){
+        
+    }
+}
+class Estudante 
+    soma(5, true)
+    float a = 5386.;
+    protected static final int m = 8+2;
+}

@@ -1,0 +1,85 @@
+<Program> ::= { <Package> } { <Import> } [ <MainClass> ] { <ClassDecl> }
+
+<Package> ::= "package" ID { "." ID } ";"
+
+<Import> ::= "import" ID { "." ID } ["." "*"] ";"
+
+<MainClass> ::= { "public" } "class" ID "{"
+                          "public" "static" "void" "main" "(" "String" "[" "]" ID ")" "{"
+                            { <Statement> }
+                          "}"
+                        "}"
+
+<ClassDecl> ::= "class" ID [ "extends" ID ] "{"
+                          { <Statement> }
+                      "}"
+
+
+###### DECLARAÇÃO DE VARIÁVEL OU FUNÇÃO #######
+<Decl> ::= <Declarators> <Type> ID <Decl1>
+<Decl1> ::=  <VarDecl> | <MethodDecl>
+<VarDecl> ::= ";" | "=" <Expression> ";"
+<MethodDecl> ::= "(" [ <ParametersList> ] ")" "{"
+                    { <Statement> }
+                    [ "return" <Expression> ";" ]
+                  "}"
+                  
+
+<Declarators> ::= [ "public" | "private" ] [ "static" ] [ "final" ]
+
+<ParametersList> ::= <Type> ID { "," <ParametersList> }
+
+<Type> ::= <PrimType> <ArrType> | <ClassType> <ArrType>
+
+<PrimType> ::= "int" | "boolean" | "float" | "double" | "char" | "byte" | "short" | "long"
+
+<ArrType> ::= "[" <Expression> "]"
+
+<ClassType> ::= ID
+
+<IfStmt> = "if" "(" <Expression> ")" <Statement> [ "else" <Statement> ] 
+
+<WhileStmt> ::= "while" "(" <Expression> ")" <Statement> 
+
+<DoWhileStmt> ::= "do" "{" <Statement> "}" "while" "(" <Expression> ")" ";" 
+
+<ForStmt> ::= "for" "(" <Expression> ";" <Expression> ";" <Expression> ")" <Statement>
+
+<Print> ::= "System.out.print" [ "ln" ] "(" <Expression> ")" ";" 
+
+<Statement> ::= <BlockStatement>
+         | <IfStmt>
+         | <WhileStmt>
+         | <ForStmt>
+         | <DoWhileStmt>
+         | <Print>
+         | {<Statement}
+         
+<BlockStatement> = "{" { <Statement>  } "}"
+
+<Expression> ::= <Expression1> <Expression2>
+<Expression2> ::= "=" <Expression> <Expression2> | "/" <Expression> <Expression2> | 
+"/=" <Expression> <Expression2> | "+" <Expression> <Expression2> | "++" <Expression> <Expression2> | 
+"+=" <Expression> <Expression2> | "-" <Expression> <Expression2> | "--" <Expression> <Expression2> | 
+"-=" <Expression> <Expression2> | "*" <Expression> <Expression2> | "*=" <Expression> <Expression2> | 
+"==" <Expression> <Expression2> | "^" <Expression> <Expression2> | "^=" <Expression> <Expression2> | 
+"|" <Expression> <Expression2> | "|=" <Expression> <Expression2> | "||" <Expression> <Expression2> | 
+"&" <Expression> <Expression2> | "&=" <Expression> <Expression2> | "&&" <Expression> <Expression2> | 
+"!=" <Expression> <Expression2> | "%" <Expression> <Expression2> | "%=" <Expression> <Expression2> | 
+"<" <Expression> <Expression2> | "<=" <Expression> <Expression2> | "<<" <Expression> <Expression2> | 
+"<<=" <Expression> <Expression2> | ">" <Expression> <Expression2> | ">=" <Expression> <Expression2> | 
+">>" <Expression> <Expression2> | ">>=" <Expression> <Expression2> | "~" <Expression> <Expression2> | 
+"." "length" <Expression2> | "[" <Expression> "]" "=" <Expression> | "new" ID "(" <ArgumentList> ")" | 
+<Expression3> 
+
+<Expression3> ::= ε | <Expression2>
+<Expression1> ::= <References> <Expression4> | INT_LIT | FLOAT_LIT | CHAR_LIT | BOOLEAN_LIT | ε
+<Expression4> ::= "[" <Expression> "]" <Expression2> | "("<ArgumentList>")" <Expression2> | 
+"." "length" <Expression4> | ε
+
+<ArgumentList> ::= <Expression> {"," <Expression>}
+
+<References> ::= ("this" | ID ) ( "." ID )*
+
+<Assignment> ::= <References> <Assignment1>
+<Assignment1> ::= [ "[" <Expression> "]" ] "=" <Expression> ";" | "(" <ArgumentList> ")" ";" 
