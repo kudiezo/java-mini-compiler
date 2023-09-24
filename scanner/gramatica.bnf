@@ -1,0 +1,43 @@
+<Program>::= <Package><ClassDecl>
+
+<Package>::= "package" ID <Package1>
+<Package1>::= "." ID <Package1> | ";" <Import>
+<Import>::= ε | "import" ID <Import1>
+<Import1>::= "." <Import2> | ";" <Import>
+<Import2>::= ID <Import1> <Import> | "*" ";"
+
+<ClassDecl>::= "class" ID "{" <Decl>
+
+<Decl>::= <Declarators> ID <Decl1>
+<Decl1>::= ";" <Decl> | "("<ParameterList>")" "{" <Statement> ("return" <Expression>";") "}" <Decl> | "}"
+
+<Declarators>::= "public" <Declarators1> | "private" <Declarators1> | "static" <Declarators2> | <Type>
+<Declarators1>::= "static" <Type> | "final" <Type> | <Type>
+<Declarators2>::= "public" Type | "private" Type | "final" <Type> | <Type>
+
+<Type>::= <PrimType> | ClassType | ArrType
+<PrimType>::= "byte" | "short" | "int" | "long" | "float" | "double" | "char" | "booblean"
+<ClassType>::= ID
+<ArrType>::= <PrimType> "["<Expression>"]" | ClassType "["<Expression>"]"
+
+<ParameterList>::= <Type> ID <ParameterList1> | ε
+<ParameterList1>::= "," <ParameterList> | ε
+
+<ArgumentList> ::= <Expression> <ArgumentList1>
+<ArgumentList1> ::= ε | "," <Expression> <ArgumentList1>
+
+<Reference>::= ("this" | ID) "." ID <Reference1>
+<Reference1>::= "." ID <Reference1> | ε
+
+<Expression> ::= <Expression1> <Expression2>
+<Expression2> ::= "=" <Expression> | "[" <Expression> "]" "=" <Expression> | "/" <Expression> <Expression2> | "/=" <Expression> <Expression2> | "+" <Expression> <Expression2> | "++" <Expression> <Expression2> | "+=" <Expression> <Expression2> | "-" <Expression> <Expression2> | "--" <Expression> <Expression2> | "-=" <Expression> <Expression2> | "*" <Expression> <Expression2> | "*=" <Expression> <Expression2> | "==" <Expression> <Expression2> | "^" <Expression> <Expression2> | "^=" <Expression> <Expression2> | "|" <Expression> <Expression2> | "|=" <Expression> <Expression2> | "||" <Expression> <Expression2> | "&" <Expression> <Expression2> | "&=" <Expression> <Expression2> | "&&" <Expression> <Expression2> | "!=" <Expression> <Expression2> | "%" <Expression> <Expression2> | "%=" <Expression> <Expression2> | "<" <Expression> <Expression2> | "<=" <Expression> <Expression2> | "<<" <Expression> <Expression2> | "<<=" <Expression> <Expression2> | ">" <Expression> <Expression2> | ">=" <Expression> <Expression2> | ">>" <Expression> <Expression2> | ">>=" <Expression> <Expression2> | "~" <Expression> <Expression2> | "." "length" <Expression2> | <Expression3>
+<Expression3> ::= ε | <Expression2>
+<Expression1> ::= ID <Expression4> | INT_LIT | FLOAT_LIT | CHAR_LIT | BOOLEAN_LIT
+<Expression4> ::= "[" <Expression> "]" <Expression4> | "("<ArgumentList>")" <Expression4> | "." "length" <Expression4> | ε
+
+<Statement>::= <Type> ID "=" <Expression> ";" | <Reference> <Reference2> | <If> | <Expression> | <Expression2>
+<Reference2>::= "["<Expression>"]" "=" <Expression> ";" | "("ArgumentList")" ";" 
+<If> "if" "("<Expression>")" <Statement> <If2>
+<If2> "else" <Statement> | ε
+
+
