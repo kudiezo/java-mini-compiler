@@ -1,2 +1,2 @@
 # java-mini-compiler
-This Java Mini Compiler built in C
+This a Java Mini Compiler built in C language
